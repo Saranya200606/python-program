@@ -1,0 +1,70 @@
+class Recipe:
+    def _init_(self, name, ingredients, instructions):
+        self.name = name
+        self.ingredients = ingredients
+        self.instructions = instructions
+
+    def _str_(self):
+        return f"Recipe: {self.name}\nIngredients: {', '.join(self.ingredients)}\nInstructions: {self.instructions}"
+
+
+class RecipeManager:
+    def _init_(self):
+        self.recipes = []
+
+    def add_recipe(self, recipe):
+        self.recipes.append(recipe)
+
+    def display_all_recipes(self):
+        if not self.recipes:
+            print("No recipes available.")
+        else:
+            for index, recipe in enumerate(self.recipes, start=1):
+                print(f"\nRecipe {index}:")
+                print(recipe)
+
+    def search_recipe(self, keyword):
+        found_recipes = []
+        for recipe in self.recipes:
+            if keyword.lower() in recipe.name.lower():
+                found_recipes.append(recipe)
+        if found_recipes:
+            print(f"Found {len(found_recipes)} recipes matching '{keyword}':")
+            for index, recipe in enumerate(found_recipes, start=1):
+                print(f"\nRecipe {index}:")
+                print(recipe)
+        else:
+            print(f"No recipes found matching '{keyword}'.")
+
+
+def main():
+    recipe_manager = RecipeManager()
+
+    while True:
+        print("\nRecipe Management System")
+        print("1. Add a recipe")
+        print("2. Display all recipes")
+        print("3. Search for a recipe")
+        print("4. Exit")
+        choice = input("Enter your choice: ")
+
+        if choice == '1':
+            name = input("Enter the recipe name: ")
+            ingredients = input("Enter the ingredients (comma separated): ").split(',')
+            instructions = input("Enter the instructions: ")
+            recipe = Recipe(name.strip(), [ingredient.strip() for ingredient in ingredients], instructions.strip())
+            recipe_manager.add_recipe(recipe)
+            print("Recipe added successfully.")
+        elif choice == '2':
+            recipe_manager.display_all_recipes()
+        elif choice == '3':
+            keyword = input("Enter the keyword to search: ")
+            recipe_manager.search_recipe(keyword.strip())
+        elif choice == '4':
+            print("Exiting the Recipe Management System. Goodbye!")
+            break
+        else:
+            print("Invalid choice. Please try again.")
+
+if _name_ == "_main_":
+    main()1
